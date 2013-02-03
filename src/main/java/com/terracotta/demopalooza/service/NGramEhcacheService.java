@@ -1,22 +1,29 @@
 package com.terracotta.demopalooza.service;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+import net.sf.ehcache.search.Attribute;
+import net.sf.ehcache.search.Direction;
+import net.sf.ehcache.search.Query;
+import net.sf.ehcache.search.Result;
+import net.sf.ehcache.search.Results;
+
+import com.terracotta.demopalooza.model.Ngram;
+
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import com.terracotta.demopalooza.model.Ngram;
-
- 
-import net.sf.ehcache.*;
-import net.sf.ehcache.search.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is for reference until the hands-on project is ready
+ */
 
-public class NGramEhcacheService extends NgramJdbcService {
+@Deprecated
+public class NgramEhcacheService extends NgramJdbcService {
   private CacheManager manager;
   private Cache cache;
   

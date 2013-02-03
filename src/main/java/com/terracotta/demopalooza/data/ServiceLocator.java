@@ -1,35 +1,34 @@
 package com.terracotta.demopalooza.data;
 
-import com.terracotta.demopalooza.service.NGramEhcacheService;
-import com.terracotta.demopalooza.service.NgramJdbcService;
+import com.terracotta.demopalooza.service.NgramEx1Service;
+import com.terracotta.demopalooza.service.NgramEx2Service;
+import com.terracotta.demopalooza.service.NgramEx3Service;
 import com.terracotta.demopalooza.service.NgramService;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceLocator {
 
-  private static Map<String, NgramService> services = new ConcurrentHashMap<String, NgramService>();
+  private static Map<String, NgramService> services = new HashMap<String, NgramService>();
+
+/*
+  static {
+    Map<String, NgramService> initMap = new ConcurrentHashMap<String, NgramService>();
+    services.put("ex1", new NgramEx1Service());
+    services.put("ex2", new NgramEx2Service());
+    services.put("ex3", new NgramEx3Service());
+    services = Collections.unmodifiableMap(initMap);
+  }
+*/
 
   public static NgramService getService(String name) throws Exception {
-    if (!services.containsKey(name)) {
-      services.put(name, createService(name));
-      return services.get(name);
-    } else {
-      return services.get(name);
-    }
+    services.put("ex1", new NgramEx1Service());
+    services.put("ex2", new NgramEx2Service());
+    services.put("ex3", new NgramEx3Service());
+    return services.get(name);
   }
 
-  private static NgramService createService(final String name) throws Exception {
-    if ("ehcache".equals(name)) {
-      NGramEhcacheService service = new NGramEhcacheService();
-      service.setup();
-      return service;
-    } else if ("sql".equals(name)) {
-      NgramJdbcService ngramJdbcService = new NgramJdbcService();
-      ngramJdbcService.setup();
-      return ngramJdbcService;
-    }
-    return null;
-  }
 }

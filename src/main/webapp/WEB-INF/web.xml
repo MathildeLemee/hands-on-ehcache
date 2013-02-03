@@ -5,13 +5,23 @@
          version="2.4">
 
   <servlet>
-    <servlet-name>data</servlet-name>
-    <servlet-class>com.terracotta.demopalooza.view.DataServlet</servlet-class>
+    <servlet-name>singledata</servlet-name>
+    <servlet-class>com.terracotta.demopalooza.view.SingleDataServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>data</servlet-name>
-    <url-pattern>/data</url-pattern>
+    <servlet-name>singledata</servlet-name>
+    <url-pattern>/singledata</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>multidata</servlet-name>
+    <servlet-class>com.terracotta.demopalooza.view.MultipleDataServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>multidata</servlet-name>
+    <url-pattern>/multidata</url-pattern>
   </servlet-mapping>
 
 </web-app>

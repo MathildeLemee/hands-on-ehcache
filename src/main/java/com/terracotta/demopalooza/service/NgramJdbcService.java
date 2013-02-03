@@ -9,6 +9,12 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This is for reference until the hands-on project is ready
+ */
+
+
+@Deprecated
 public class NgramJdbcService implements NgramService {
 
   protected ComboPooledDataSource cdps;
@@ -53,6 +59,4 @@ public class NgramJdbcService implements NgramService {
     return ngram;
   }
 
-  public void warmup() throws Exception {
-  }
 }

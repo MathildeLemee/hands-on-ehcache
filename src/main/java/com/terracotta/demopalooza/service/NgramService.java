@@ -14,6 +14,4 @@ public interface NgramService {
 
   Ngram findMostPopularNgramsForYear(int year) throws Exception;
 
-  void warmup() throws Exception;
-
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Search perf</title>
+    <script type="text/javascript" src="/js/smoothie.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Data
+            var line1 = new TimeSeries();
+            var line2 = new TimeSeries();
+
+            var year = 1700;
+
+            // Get data
+            setInterval(function () {
+                $.ajax({
+                    type:"GET",
+                    url:"/data?source=sql&year=" + year,
+                    dataType:"html",
+                    success:function (data) {
+                        line2.append(new Date().getTime(), data);
+                        $("#db-latency").html(data);
+                    }
+                });
+
+                $.ajax({
+                    type: "GET",
+                    url: "/data?source=ehcache&year=" + year,
+                    dataType: "html",
+                    success: function (data) {
+                        line1.append(new Date().getTime(), data);
+                        $("#ehcache-latency").html(data);
+                    }
+                });
+
+                $("#counter").html(year);
+                year++;
+            }, 1000);
+
+            // create chart
+            var smoothie = new SmoothieChart({ grid: { strokeStyle: 'rgb(125, 125, 125)', fillStyle: 'rgb(60, 60, 60)', lineWidth: 1, millisPerLine: 1000, verticalSections: 10 } });
+            smoothie.addTimeSeries(line1, { strokeStyle: 'rgb(255, 0, 0)', fillStyle: 'rgba(200, 0, 0, 0.4)', lineWidth: 3 });
+            smoothie.addTimeSeries(line2, { strokeStyle: 'rgb(0, 0, 255)', fillStyle: 'rgba(0, 0, 200, 0.3)', lineWidth: 3 });
+            smoothie.streamTo(document.getElementById("mycanvas"), 1000);
+        });
+    </script>
+</head>
+<body>
+
+<div style="float: left"> <canvas id="mycanvas" width="1000" height="550"></canvas> </div>
+<div style="float: left">
+    <h1>Year: <span id="counter">...</span></h1>
+    <h2 style="color: blue">Database latency:<span id="db-latency">...</span>ms</h2>
+    <h2 style="color: red">Ehcache latency:<span id="ehcache-latency">...</span>ms</h2>
+</div>
+</body>
+</html>
